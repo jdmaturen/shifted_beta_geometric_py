@@ -1,7 +1,7 @@
 # sBG model of customer retention
 
-A python implementation of the shifted-beta-geometric (sBG) model from Fader and Hardie's "How to Project Customer
-Retention" (2006).
+A python implementation of the shifted-beta-geometric (sBG) model from Fader and Hardie's ["How to Project Customer
+Retention" (2006)](http://www.brucehardie.com/papers/021/sbg_2006-05-30.pdf).
 
 ## Example
 
