@@ -25,15 +25,18 @@ future = predicted_survival(alpha, beta, len(example_data) + 5)[-5:]
 
 # future = [0.460, 0.436, 0.414, 0.395, 0.378]
 
-# compute the discounted expected residual lifetime (DERL) for the survivors of this cohort at point in time t:
-discount = 0.10  # rate at which we discount future revenue to get value in today's terms, e.g. 10%/year
+# compute the discounted expected residual lifetime (DERL) for the survivors
+# of this cohort at point in time t:
+discount = 0.10  # rate at which we discount future revenue
+                 # to get value in today's terms, e.g. 10%/year
 t = len(example_data)
 residual_cohort_lifetime = derl(alpha, beta, discount, t)
 
 # residual_cohort_lifetime = 7.530
 
-# if our average revenue per period per customer is a constant v_avg, to get the residual customer lifetime value (CLV)
-# of this cohort we simply multiply the residual_cohort_lifetime by v_avg:
+# if our average revenue per period per customer is a constant v_avg,
+# to get the residual customer lifetime value (CLV) of this cohort
+# we simply multiply the residual_cohort_lifetime by v_avg:
 
 v_avg = 10
 residual_cohort_clv = residual_cohort_lifetime * v_avg
