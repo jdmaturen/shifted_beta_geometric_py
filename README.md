@@ -3,7 +3,8 @@
 A python implementation of the shifted-beta-geometric (sBG) model from Fader and Hardie's ["How to Project Customer
 Retention" (2006)](http://www.brucehardie.com/papers/021/sbg_2006-05-30.pdf).
 
-Important note to modelers: sBG is only applicable to discrete, contractual customer relationships:
+Important note to modelers: amongst other presumptions, see §3 of the paper, sBG is only applicable to discrete,
+contractual customer relationships:
 
 <img src="customer_bases.png" alt="Custer Bases Diagram" width=363 height=321>
 
