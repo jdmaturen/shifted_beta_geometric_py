@@ -59,11 +59,11 @@ def log_likelihood_multi_cohort(alpha, beta, data):
         return -1000
     probabilities = generate_probabilities(alpha, beta, len(data[0]))
 
-    periods = len(data) - 1
+    cohorts = len(data)
     total = 0
     for i, cohort in enumerate(data):
         total += sum([(cohort[j]-cohort[j+1])*log(probabilities[j]) for j in xrange(len(cohort)-1)])
-        total += cohort[-1] * log(survivor(probabilities, periods - i))
+        total += cohort[-1] * log(survivor(probabilities, cohorts - i - 1))
     return total
 
 
