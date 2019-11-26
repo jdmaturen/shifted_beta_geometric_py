@@ -19,7 +19,7 @@ __author__ = 'JD Maturen'
 def generate_probabilities(alpha, beta, x):
     """Generate probabilities in one pass for all t in x"""
     p = [alpha / (alpha + beta)]
-    for t in xrange(1, x):
+    for t in range(1, x):
         pt = (beta + t - 1) / (alpha + beta + t) * p[t-1]
         p.append(pt)
     return p
@@ -35,7 +35,7 @@ def probability(alpha, beta, t):
 def survivor(probabilities, t):
     """Survivor function S"""
     s = 1 - probabilities[0]
-    for x in xrange(1, t + 1):
+    for x in range(1, t + 1):
         s = s - probabilities[x]
     return s
 
@@ -62,7 +62,7 @@ def log_likelihood_multi_cohort(alpha, beta, data):
     cohorts = len(data)
     total = 0
     for i, cohort in enumerate(data):
-        total += sum([(cohort[j]-cohort[j+1])*log(probabilities[j]) for j in xrange(len(cohort)-1)])
+        total += sum([(cohort[j]-cohort[j+1])*log(probabilities[j]) for j in range(len(cohort)-1)])
         total += cohort[-1] * log(survivor(probabilities, cohorts - i - 1))
     return total
 
@@ -101,7 +101,7 @@ def predicted_survival(alpha, beta, x):
     """Predicted survival probability, i.e. percentage of customers retained, for all t in x.
     Function 1 in the paper"""
     s = [predicted_retention(alpha, beta, 0)]
-    for t in xrange(1, x):
+    for t in range(1, x):
         s.append(predicted_retention(alpha, beta, t) * s[t-1])
     return s
 
@@ -130,23 +130,23 @@ def test():
     """Test against the High End subscription retention data from the paper"""
     example_data = [.869, .743, .653, .593, .551, .517, .491]
     ll11 = log_likelihood(1., 1., example_data)
-    print np.allclose(ll11, -2.115, 1e-3)
+    print(np.allclose(ll11, -2.115, 1e-3))
 
     res = maximize(example_data)
     alpha, beta = res.x
-    print res.status == 0 and np.allclose(alpha, 0.668, 1e-3) and np.allclose(beta, 3.806, 1e-3)
-    print
+    print(res.status == 0 and np.allclose(alpha, 0.668, 1e-3) and np.allclose(beta, 3.806, 1e-3))
+    print()
 
-    print "real\t", map(lambda x: "{0:.1f}%".format(x*100), example_data)
-    print "pred\t", map(lambda x: "{0:.1f}%".format(x*100), predicted_survival(alpha, beta, 12))
-    print
+    print("real\t", ["{0:.1f}%".format(x*100) for x in example_data])
+    print("pred\t", ["{0:.1f}%".format(x*100) for x in predicted_survival(alpha, beta, 12)])
+    print()
 
-    print map("{0:f}".format, [derl(alpha, beta, 0.1, x) for x in xrange(12)])
-    print
+    print(list(map("{0:f}".format, [derl(alpha, beta, 0.1, x) for x in range(12)])))
+    print()
 
     multi_cohort_data = [[10000, 8000, 6480, 5307, 4391], [10000, 8000, 6480, 5307], [10000, 8000, 6480], [10000, 8000]]
     alpha, beta = fit_multi_cohort(multi_cohort_data)
-    print np.allclose(alpha, 3.80, 1e-2) and np.allclose(beta, 15.19, 1e-2)
+    print(np.allclose(alpha, 3.80, 1e-2) and np.allclose(beta, 15.19, 1e-2))
 
 
 if __name__ == '__main__':
